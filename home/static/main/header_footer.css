@@ -1,0 +1,14 @@
+.main { 
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+html, body {
+    height: 100%;
+}
+  
+footer {
+    background-color: green;
+}
