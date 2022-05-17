@@ -1,0 +1,45 @@
+{% extends 'main/header_footer.html' %}
+
+{% load static %}
+
+{% block head %}
+    {{ block.super }}
+    <link rel="stylesheet" type="text/css" href="{% static 'accounts/css/login.css' %}" />
+{% endblock head %}
+
+
+{% block body %}
+    {{ block.super }}
+    <form id="login_form" action="" method=POST>
+        {% csrf_token %}
+
+        <div class="form-floating mb-4">
+            <input type="text" id="username" name="username" class="form-control" placeholder="username or password" />
+            <label class="form-label" for="username">Username</label>
+        </div>
+    
+        <!-- Password input -->
+        <div class="form-floating mb-4">
+            <input type="password" id="form2Example2" name="password" class="form-control" placeholder="Password" />
+            <label class="form-label" for="form2Example2">Password</label>
+        </div>
+    
+        <!-- Submit button -->
+        <div class="d-flex justify-content-center">
+            <button type="submit" value="Submit" class="btn btn-primary btn-block mb-4 ">Log in</button>
+        </div>
+
+        <!-- Register buttons -->
+        <div class="text-center">
+        <p>Not a member? <a href="#!">Register</a></p>
+        <p>or sign up with:</p>
+        <button type="button" class="btn btn-link btn-floating mx-1">
+            <i class="fab fa-google"></i>
+        </button>
+    
+        <button type="button" class="btn btn-link btn-floating mx-1">
+            <i class="fab fa-twitter"></i>
+        </button>
+        </div>
+    </form>
+{% endblock body %}

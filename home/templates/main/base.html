@@ -1,8 +1,13 @@
+{% load static %}
+
 <!DOCTYPE html>
 
 <html>
 
     <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="{% static 'main/bootstrap-5.0.2-dist/css/bootstrap.min.css' %}">
+        <link href="{% static 'fontawesomefree/css/all.min.css' %}" rel="stylesheet" type="text/css">
         {% block head %}{% endblock head %}
     </head>
 
@@ -12,11 +17,22 @@
 
         <div class="main">
         
-        {% block body %}{% endblock body %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            {% block body %}{% endblock body %}
 
         </div>
 
         {% block footer %}{% endblock footer %}
+
+        <script src="{% static 'main\bootstrap-5.0.2-dist\js\bootstrap.bundle.js' %}"></script>
         
     </body>
 </html>

@@ -3,19 +3,16 @@
 {% load static %}
 
 {% block head %}
-    {% block before_head %}{% endblock before_head %}
-    <link rel="stylesheet" type="text/css" href="{% static 'main/header_footer.css' %}" />
-    {% block after_head %}{% endblock after_head %}
+    {{ block.super }}
+    <link rel="stylesheet" type="text/css" href="{% static 'main/css/header_footer.css' %}" />
 {% endblock head %}
 
 {% block header %}
-    {% block before_header %}{% endblock before_header %}
+    {{ block.super }}
     {% include 'main/header.html' %}
-    {% block after_header %}{% endblock after_header %}
 {% endblock header %}
 
 {% block footer %}
-    {% block before_footer %}{% endblock before_footer %}
+    {{ block.super }}
     {% include 'main/footer.html' %}
-    {% block after_footer %}{% endblock after_footer %}
 {% endblock footer %}
