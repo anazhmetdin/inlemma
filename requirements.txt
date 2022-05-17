@@ -1,2 +1,4 @@
+django
 psycopg2
 fontawesomefree
+social-auth-app-django
