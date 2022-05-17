@@ -3,17 +3,19 @@
 {% load static %}
 
 {% block head %}
+    {% block before_head %}{% endblock before_head %}
     <link rel="stylesheet" type="text/css" href="{% static 'main/header_footer.css' %}" />
+    {% block after_head %}{% endblock after_head %}
 {% endblock head %}
 
 {% block header %}
-    <header>
-        <p> header </p>
-    </header>
+    {% block before_header %}{% endblock before_header %}
+    {% include 'main/header.html' %}
+    {% block after_header %}{% endblock after_header %}
 {% endblock header %}
 
 {% block footer %}
-    <footer>
-        <p> footer </p>
-    </footer>
+    {% block before_footer %}{% endblock before_footer %}
+    {% include 'main/footer.html' %}
+    {% block after_footer %}{% endblock after_footer %}
 {% endblock footer %}
