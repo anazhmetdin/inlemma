@@ -40,10 +40,12 @@
                 <i class="fab fa-google"></i>
             </button>
         </a>
-    
-        <button type="button" class="btn btn-link btn-floating mx-1">
-            <i class="fab fa-twitter"></i>
-        </button>
+        
+        <a href="{% url 'social:begin' backend='twitter' %}?next={% url 'home' %}">
+            <button type="button" class="btn btn-link btn-floating mx-1">
+                <i class="fab fa-twitter"></i>
+            </button>
+        </a>
         </div>
     </form>
 {% endblock body %}
