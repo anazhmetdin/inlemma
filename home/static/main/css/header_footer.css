@@ -8,6 +8,14 @@
 html, body {
     height: 100%;
 }
+
+#nav_logo {
+    margin-left: 1em;
+}
+
+#nav_dropdown {
+    list-style-type: none;
+}
   
 footer {
     background-color: green;

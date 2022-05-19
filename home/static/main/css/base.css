@@ -11,6 +11,10 @@
     margin: 0;
 }
 
+#messages .btn-close {
+    padding: 1rem;
+}
+
 body {
     min-width: 18em;
 }
