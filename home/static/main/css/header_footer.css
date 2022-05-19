@@ -1,12 +1,19 @@
-.main { 
+#main { 
     min-height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
+    margin-top: 4em;
 }
 
 html, body {
     height: 100%;
+}
+
+#nav_bar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    min-width: 18em;
+    max-width: 100em;
+    z-index: 42;
 }
 
 #nav_logo {
@@ -16,7 +23,7 @@ html, body {
 #nav_dropdown {
     list-style-type: none;
 }
-  
+
 footer {
     background-color: green;
 }
