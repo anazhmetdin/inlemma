@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
+from .forms import NewUserForm
 from django.contrib import messages
 from django.views import View
 
@@ -25,3 +26,19 @@ class logoutView(View):
     def get(self, request):
         logout(request)
         return redirect('home')
+
+class registerView(View):
+    def get(self, request):
+        context = {'form': NewUserForm()}
+        return render(request, 'accounts/register.html', context)
+
+    def post(self, request):
+        form = NewUserForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user, backend='django.contrib.auth.backends.ModelBackend')
+            messages.success(request, "Registration successful." )
+            return redirect("home")
+        for error in form.errors:
+            messages.error(request, form.errors[error])
+        return redirect('register')

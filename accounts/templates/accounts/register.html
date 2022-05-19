@@ -1,0 +1,70 @@
+{% extends "main/header_footer.html" %}
+
+{% block body %}       
+    {{ block.super }}
+
+    <form id="register_form" action="{% url 'register' %}" method=POST>
+        {% csrf_token %}
+
+        <div class="form-floating mb-4">
+            {{ form.username.errors }}
+            <input type="text" id="{{ form.username.id_for_label }}"
+            name="{{ form.username.html_name }}" class="form-control"
+            required placeholder="username" maxlength="16"/>
+            <label class="form-label" for="{{ form.username.id_for_label }}">Username</label>
+            <div class="form-text">4-16 characters. Letters, digits and _ only.</div>
+        </div>
+    
+        <!-- Password input -->
+        <div class="form-floating mb-4">
+            {{ form.password1.errors }}
+            <input type="password" id="{{ form.password1.id_for_label }}" name="{{ form.password1.html_name }}" class="form-control" required placeholder="password" />
+            <label class="form-label" for="{{ form.password1.id_for_label }}">Password</label>
+            <div class="form-text">
+                <ul>
+                    <li>Your password can’t be too similar to your other personal information.</li>
+                    <li>Your password must contain at least 8 characters.</li>
+                    <li>Your password can’t be a commonly used password.</li>
+                    <li>Your password can’t be entirely numeric.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="form-floating mb-4">
+            {{ form.password2.errors }}
+            <input type="password" id="{{ form.password2.id_for_label }}" name="{{ form.password2.html_name }}" class="form-control" required placeholder="password" />
+            <label class="form-label" for="{{ form.password2.id_for_label }}">Password confirmation</label>
+            <div class="form-text">Enter the same password as before, for verification.</div>
+        </div>
+
+        <div class="form-floating mb-4">
+            {{ form.email.errors }}
+            <input type="email" id="id_email" name="email" class="form-control" required placeholder="example@email.com" />
+            <label class="form-label" for="{{ form.email.id_for_label }}">Email</label>
+            <div class="form-text">Your email will be verified and used for resetting password.</div>
+        </div>
+    
+        <!-- Submit button -->
+        <div class="d-flex justify-content-center">
+            <button type="submit" value="Submit" class="btn btn-primary btn-block mb-4 ">Register</button>
+        </div>
+
+        <!-- Login buttons -->
+        <div class="text-center">
+        <p>Already a member? <a href="{% url 'login' %}">Log in</a></p>
+        <p>or sign up with:</p>
+        <a href="{% url 'social:begin' backend='google-oauth2' %}?next={% url 'home' %}">
+            <button type="button" class="btn btn-link btn-floating mx-1">
+                <i class="fab fa-google"></i>
+            </button>
+        </a>
+        
+        <a href="{% url 'social:begin' backend='twitter' %}?next={% url 'home' %}">
+            <button type="button" class="btn btn-link btn-floating mx-1">
+                <i class="fab fa-twitter"></i>
+            </button>
+        </a>
+        </div>
+    </form>
+
+{% endblock %}
