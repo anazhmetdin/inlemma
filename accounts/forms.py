@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-import re
+from .utils import validUsername
 
 
 class NewUserForm(UserCreationForm):
@@ -22,13 +22,9 @@ class NewUserForm(UserCreationForm):
         cd = self.cleaned_data
         username = cd.get("username")
 
-        if re.compile(r'.*[@\.\+-]',).match(username) != None:
-            raise forms.ValidationError({"username": "Username contains invalid characters"})
-        
-        elif len(username) > 16 or len(username) < 4:
-            raise forms.ValidationError({"username": "Username length is outside the range"})
-
-        elif User.objects.filter(username=username).exists():
-            raise forms.ValidationError({"username": f'Username "{username}" is not available'})
+        try:
+            validUsername(username)
+        except Exception as e:
+            raise forms.ValidationError({"username": e})
 
         return cd

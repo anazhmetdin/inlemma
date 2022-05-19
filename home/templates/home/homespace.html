@@ -5,4 +5,9 @@
 {% block body %}
     {{ block.super }}
     <h1> Welcome, {{ user.username }} </h1>
+    <ul>
+        <li>
+            <a href="{% url 'logout' %}">Logout</a>
+        </li>
+    </ul>
 {% endblock body %}
