@@ -18,4 +18,5 @@ body {
 #main {
     padding: 1em;
     background-color: lightcyan;
+    min-height: 100%;
 }

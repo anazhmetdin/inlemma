@@ -1,0 +1,8 @@
+{% extends 'main/header_footer.html' %}
+
+{% block title %}inlemma - Home{% endblock title %}
+
+{% block body %}
+    {{ block.super }}
+    <h1> Welcome, {{ user.username }} </h1>
+{% endblock body %}
