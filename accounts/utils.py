@@ -10,7 +10,7 @@ def validUsername(username, created=False):
     elif len(username) > 16 or len(username) < 4:
         raise Exception("Username length is outside the range")
 
-    elif not created and User.objects.filter(username=username).exists():
+    elif not created and User.objects.filter(username__iexact=username).exists():
         raise Exception(f'Username "{username}" is not available')
 
 def randomUsername(size=16, chars=string.ascii_letters + string.digits + '_'):
