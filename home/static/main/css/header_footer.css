@@ -1,3 +1,8 @@
+header {    
+    display: flex;
+    justify-content: center;
+}
+
 #nav_bar {
     position: fixed;
     top: 0;
@@ -5,6 +10,7 @@
     min-width: 18em;
     max-width: 100em;
     z-index: 42;
+    padding: 0;
 }
 
 #nav_logo {

@@ -5,6 +5,7 @@
 {% block body %}       
     {{ block.super }}
 
+    <p>Already a member? <a href="{% url 'login' %}">Log in</a></p>
     <form id="register_form" action="{% url 'register' %}" method=POST>
         {% csrf_token %}
 
@@ -53,19 +54,17 @@
 
         <!-- Login buttons -->
         <div class="text-center">
-        <p>Already a member? <a href="{% url 'login' %}">Log in</a></p>
-        <p>or sign up with:</p>
-        <a href="{% url 'social:begin' backend='google-oauth2' %}?next={% url 'home' %}">
-            <button type="button" class="btn btn-link btn-floating mx-1">
-                <i class="fab fa-google"></i>
-            </button>
-        </a>
-        
-        <a href="{% url 'social:begin' backend='twitter' %}?next={% url 'home' %}">
-            <button type="button" class="btn btn-link btn-floating mx-1">
-                <i class="fab fa-twitter"></i>
-            </button>
-        </a>
+            <p>or sign up with:</p>
+            <a href="{% url 'social:begin' backend='google-oauth2' %}?next={% url 'home' %}">
+                <button type="button" class="btn btn-link btn-floating mx-1">
+                    <i class="fab fa-google"></i>
+                </button></a>
+            
+            <a href="{% url 'social:begin' backend='twitter' %}?next={% url 'home' %}">
+                <button type="button" class="btn btn-link btn-floating mx-1">
+                    <i class="fab fa-twitter"></i>
+                </button>
+            </a>
         </div>
     </form>
 
