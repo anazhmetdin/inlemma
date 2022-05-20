@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
+from django.forms.utils import ErrorList
 from .forms import NewUserForm
 from django.contrib import messages
 from django.views import View
@@ -19,7 +20,7 @@ class loginView(View):
             return redirect('home')
         else:
             # Return an 'invalid login' error message.
-            messages.error(request, ("Wrong username or password"))
+            messages.error(request, ErrorList(["Wrong username or password."]))
             return redirect('login')
 
 class logoutView(View):
@@ -37,8 +38,9 @@ class registerView(View):
         if form.is_valid():
             user = form.save()
             login(request, user, backend='django.contrib.auth.backends.ModelBackend')
-            messages.success(request, "Registration successful." )
+            messages.success(request, ErrorList(["Registration successful."]) )
             return redirect("home")
         for error in form.errors:
             messages.error(request, form.errors[error])
+            print(type(form.errors[error]))
         return redirect('register')
