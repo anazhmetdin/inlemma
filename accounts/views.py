@@ -8,6 +8,8 @@ from django.views import View
 
 class loginView(View):
     def get(self, request):
+        if request.user.is_authenticated:
+            return redirect('home')
         return render(request, 'accounts/login.html', {})
 
     def post(self, request):
@@ -30,6 +32,8 @@ class logoutView(View):
 
 class registerView(View):
     def get(self, request):
+        if request.user.is_authenticated:
+            return redirect('home')
         context = {'form': NewUserForm()}
         return render(request, 'accounts/register.html', context)
 
