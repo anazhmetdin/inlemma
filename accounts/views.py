@@ -65,18 +65,19 @@ class registerView(View):
 
 class activateView(View):
     def get(self, request, uidb64, token):
-        try:
-            uid = force_str(urlsafe_base64_decode(uidb64))
-            user = User.objects.get(id=uid)
-        except:
-            user = None
-        
-        if user and ConfirmationTokenGenerator().check_token(user, token):
-            user.profile.mail_activated = True
-            user.save()
-            messages.success(request, ErrorList(["Email confirmed."]) )
-        else:
-            messages.error(request, ErrorList(["Invalid link."]) )
+        if request.user.email == '':
+            try:
+                uid = force_str(urlsafe_base64_decode(uidb64))
+                user = User.objects.get(id=uid)
+            except:
+                user = None
+            
+            if user and ConfirmationTokenGenerator().check_token(user, token):
+                user.profile.mail_activated = True
+                user.save()
+                messages.success(request, ErrorList(["Email confirmed."]) )
+            else:
+                messages.error(request, ErrorList(["Invalid link."]) )
         
         return redirect('home')
 
