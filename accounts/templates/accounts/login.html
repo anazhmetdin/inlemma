@@ -1,4 +1,4 @@
-{% extends 'main/header_footer.html' %}
+{% extends 'main/base.html' %}
 
 {% load static %}
 
@@ -17,14 +17,16 @@
         {% csrf_token %}
 
         <div class="form-floating mb-4">
-            <input type="text" id="username" name="username" class="form-control" required placeholder="username or password" />
-            <label class="form-label" for="username">Username</label>
+            {{ form.username.errors }}
+            <input type="text" id="{{ form.username.id_for_label }}" name="{{ form.username.html_name }}" class="form-control" required placeholder="username or password" />
+            <label class="form-label" for="{{ form.username.id_for_label }}">Username</label>
         </div>
     
         <!-- Password input -->
         <div class="form-floating mb-4">
-            <input type="password" id="form2Example2" name="password" class="form-control" required placeholder="Password" />
-            <label class="form-label" for="form2Example2">Password</label>
+            {{ form.password.errors }}
+            <input type="password" id="{{ form.password.id_for_label }}" name="{{ form.password.html_name }}" class="form-control" required placeholder="Password" />
+            <label class="form-label" for="{{ form.password.id_for_label }}">Password</label>
         </div>
     
         <!-- Submit button -->
