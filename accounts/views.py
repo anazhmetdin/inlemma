@@ -2,13 +2,14 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout
 from django.contrib.auth.models import User
 from .forms import NewUserForm
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from django.contrib import messages
 from django.forms.utils import ErrorList
 from django.views import View
 from django.utils.encoding import  force_str
 from django.utils.http import urlsafe_base64_decode
 from .utils import sendConfirmationMail, ConfirmationTokenGenerator, emailIsValid
+from django.contrib.auth.decorators import login_required
 
 class loginView(View):
     def get(self, request):
@@ -95,3 +96,20 @@ class activateView(View):
         messages.success(request, ErrorList(["Email sent, please check your inbox."]) )
 
         return redirect('home')
+
+
+class passwordChangeView(View):
+    def get(self, request):
+        context = {'form': PasswordChangeForm(request.user)}
+        return render(request, 'accounts/passwordChange.html', context)
+
+    def post(self, request):
+        form = PasswordChangeForm(request.POST)
+        print(form)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+        else:
+            for error in form.error_messages:
+                messages.error(request,  ErrorList([form.error_messages[error]]))
+            return redirect('passwordChange')
