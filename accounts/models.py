@@ -1,15 +1,17 @@
 from django.db import models
 from django.dispatch import receiver
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import User
 from .utils import randomUsername, validUsername
 
 
-class User(AbstractUser):
+class profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     mail_activated = models.BooleanField(default=False)
 
 @receiver(models.signals.post_save, sender=User)
 def user_created(sender, instance, created, **kwargs):
     if created:
+        profile.objects.create(user=instance)
         username = instance.username
         notValid = True
         while notValid:
@@ -22,3 +24,7 @@ def user_created(sender, instance, created, **kwargs):
         if username != instance.username:
             instance.username=username
             instance.save()
+
+@receiver(models.signals.post_save, sender=User)
+def save_user_profile(sender, instance, **kwargs):
+    instance.profile.save()

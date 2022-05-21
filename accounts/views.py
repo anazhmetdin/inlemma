@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import login, logout
 from django.forms.utils import ErrorList
 from .forms import NewUserForm
 from django.contrib.auth.forms import AuthenticationForm
@@ -18,9 +18,7 @@ class loginView(View):
         form = AuthenticationForm(request.POST)
         
         if form.is_valid():
-            username = request.POST['username']
-            password = request.POST['password']
-            user = authenticate(request, username=username, password=password)
+            user = form.get_user()
             login(request, user)
             # Redirect to a success page.
             return redirect('home')
