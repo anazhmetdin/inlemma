@@ -31,6 +31,10 @@ def emailIsValid(email):
     else:
         return True
 
+def validEmail(email):
+    if User.objects.filter(email__iexact=email).exists():
+        raise Exception('This email is linked to another account')
+
 class ConfirmationTokenGenerator(PasswordResetTokenGenerator):
     
     def _make_hash_value(self, user, timestamp: int) -> str:
@@ -45,16 +49,17 @@ class EmailThread(threading.Thread):
     def run(self):
         self.email.send()
 
-def sendConfirmationMail(request, user):
+
+def sendMail(request, user, subject, html, generator):
     currentSite = get_current_site(request)
-    emailSubject = 'Confirm your email'
+    emailSubject = subject
     
     emailContext = {'user': user,
                     'site': currentSite,
                     'uid': urlsafe_base64_encode(force_bytes(user.id)),
-                    'token': ConfirmationTokenGenerator().make_token(user)}
+                    'token': generator().make_token(user)}
 
-    emailBody = render_to_string('accounts/confirmation.html', emailContext)
+    emailBody = render_to_string(html, emailContext)
 
     email = EmailMultiAlternatives(subject=emailSubject,
                                    from_email=settings.EMAIL_FROM_USER,

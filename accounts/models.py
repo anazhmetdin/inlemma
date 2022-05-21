@@ -1,7 +1,8 @@
 from django.db import models
 from django.dispatch import receiver
 from django.contrib.auth.models import User
-from .utils import randomUsername, validUsername
+from django.forms import ValidationError
+from .utils import randomUsername, validUsername, validEmail
 
 
 class profile(models.Model):
