@@ -1,3 +1,4 @@
+import threading
 from django.contrib.auth.models import User
 import string
 import random
@@ -36,6 +37,14 @@ class ConfirmationTokenGenerator(PasswordResetTokenGenerator):
         return six.text_type(user.id)+six.text_type(timestamp)+six.text_type(user.profile)
 
 
+class EmailThread(threading.Thread):
+    def __init__(self, email):
+        self.email = email
+        threading.Thread.__init__(self)
+
+    def run(self):
+        self.email.send()
+
 def sendConfirmationMail(request, user):
     currentSite = get_current_site(request)
     emailSubject = 'Confirm your email'
@@ -53,4 +62,4 @@ def sendConfirmationMail(request, user):
                                   )
     
     email.attach_alternative(emailBody, "text/html")
-    email.send()
+    EmailThread(email).start()

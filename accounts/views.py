@@ -1,10 +1,10 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout
 from django.contrib.auth.models import User
-from django.forms.utils import ErrorList
 from .forms import NewUserForm
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
+from django.forms.utils import ErrorList
 from django.views import View
 from django.utils.encoding import  force_str
 from django.utils.http import urlsafe_base64_decode
@@ -83,7 +83,7 @@ class activateView(View):
     def post(self, request):
         if request.user.email == '':
             email = request.POST.get('email')
-            if emailIsValid(email):
+            if not emailIsValid(email):
                 messages.error(request, ErrorList(["Invalid email address."]) )
                 return redirect('home')
             else:
