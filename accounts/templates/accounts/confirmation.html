@@ -1,0 +1,18 @@
+{% autoescape off %}
+
+<html>
+
+    <body>
+        <h1> Hello {{ user.username }}, </h1>
+
+        <p> Welcome to <a href="{{ site }}">inlemma</a>. </p>
+
+        <p> 
+            Please click the following link in order to confirm your email:<br>
+            <a href="http://{{ site }}{% url 'activateGET' uidb64=uid token=token %}">Confirm</a>
+        </p>
+    </body>
+    
+</html>
+
+{% endautoescape %}

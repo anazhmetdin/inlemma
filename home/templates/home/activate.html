@@ -1,0 +1,24 @@
+{% extends 'main/base.html' %}
+
+{% block title %} inlemma - confirm your email{% endblock title %}
+
+{% block body %}
+    {{ block.super }}
+    <p> Please confirm your email by clicking the link that we sent to your email </p>
+    <p> If you didn't receive an email from us or the link has expired,
+         request a confirmation email: </p>
+    <form id="activation_form" action="{% url 'activatePOST' %}" method=POST>
+        {% csrf_token %}
+        <!-- Submit button -->
+        {% if user.email == '' %}
+            <div class="form-floating mb-4">
+                <input type="text" id="id_email" name="email" class="form-control" required placeholder="example@email.com" />
+                <label class="form-label" for="id_email">Email</label>
+                <div class="form-text">Your email will be verified and used for resetting password.</div>
+            </div>
+        {% endif %}
+        <div class="d-flex justify-content-center">
+            <button type="submit" value="Submit" class="btn btn-primary btn-block mb-4 ">Send confirmation email</button>
+        </div>
+    </form>
+{% endblock body %}

@@ -42,7 +42,7 @@
 
         <div class="form-floating mb-4">
             {{ form.email.errors }}
-            <input type="email" id="id_email" name="email" class="form-control" required placeholder="example@email.com" />
+            <input type="email" id="{{ form.email.id_for_label }}" name="{{ form.email.html_name }}" class="form-control" required placeholder="example@email.com" />
             <label class="form-label" for="{{ form.email.id_for_label }}">Email</label>
             <div class="form-text">Your email will be verified and used for resetting password.</div>
         </div>
