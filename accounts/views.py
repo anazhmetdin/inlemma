@@ -1,5 +1,6 @@
+import email
 from django.shortcuts import render, redirect
-from django.contrib.auth import login, logout, update_session_auth_hash
+from django.contrib.auth import login, logout, update_session_auth_hash, authenticate
 from django.contrib.auth.models import User
 from .forms import NewUserForm
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm, PasswordResetForm, SetPasswordForm
@@ -11,6 +12,7 @@ from django.utils.http import urlsafe_base64_decode
 from .utils import sendMail, ConfirmationTokenGenerator, emailIsValid
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 
+
 class loginView(View):
     def get(self, request):
         if request.user.is_authenticated:
@@ -20,14 +22,28 @@ class loginView(View):
         return render(request, 'accounts/login.html', context)
 
     def post(self, request):        
-        form = AuthenticationForm(data=request.POST)
-        if form.is_valid():
-            user = form.get_user()
-            login(request, user)
-            # Redirect to a success page.
-            return redirect('home')
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+        print(username, password    )
+        if username != "" and password != "":
+            user = None
+            if "@" not in username:
+                user = authenticate(username=username, password=password)
+            else:
+                try:
+                    emailUser = User.objects.get(email=username)
+                    user = authenticate(username=emailUser.username, password=password)
+                    if not user and emailUser:
+                        messages.error(request, ErrorList(["This account was registered using external authentication, you could login using the same method."]))
+                except Exception as e:
+                    pass
+            if user:
+                login(request, user, backend='django.contrib.auth.backends.ModelBackend')
+                # Redirect to a success page.
+                return redirect('home')
         
-        # Return an 'invalid login' error message.
+        # Return an 'invalid login' error message.        
+        form = AuthenticationForm(data=request.POST)
         if form.errors:
             for error in form.errors:
                 messages.error(request, form.errors[error])
@@ -35,6 +51,7 @@ class loginView(View):
             messages.error(request, ErrorList(["Wrong username or password."]))
         
         return redirect('login')
+
 
 class logoutView(View):
     def get(self, request):
@@ -110,7 +127,7 @@ class passwordChangeView(View):
     def get(self, request):
         if not request.user.has_usable_password():
             messages.error(request,  ErrorList(["This account was registered using external authentication, please login using the same method."]))
-            messages.error(request,  ErrorList(["You can set a password to be used in logging-in through this form."]))
+            messages.error(request,  ErrorList(["You can set a password to be used in logging-in through setting an email and a password."]))
             return redirect('passwordResetForm')
         context = {'form': PasswordChangeForm(request.user)}
         return render(request, 'accounts/passwordChange.html', context)
@@ -130,37 +147,21 @@ class passwordChangeView(View):
 
 class passwordResetFormView(View):
     def get(self, request):
-        if request.user.is_authenticated:
-            context = {'form': SetPasswordForm(request.user)}
-            return render(request, 'accounts/passwordReset.html', context)
+        if request.user.is_authenticated and not request.user.has_usable_password():
+            if request.user.email == '':
+                return render(request, 'home/activate.html')
 
         context = {'form': PasswordResetForm()}
         return render(request, 'accounts/passwordResetForm.html', context)
 
     def post(self, request):
-        
-        if request.user.is_authenticated:
-            form = SetPasswordForm(user=request.user, data=request.POST)
-            if form.is_valid():
-                request.user.set_password(request.POST.get('new_password1'))
-                request.user.save()
-                update_session_auth_hash(request, request.user)
-                messages.success(request,  ErrorList(["Password changed succesfully."]))
-                return redirect('home')
-            else:
-                for error in form.error_messages:
-                    messages.error(request,  ErrorList([form.error_messages[error]]))
-                return redirect('passwordResetForm')
-
         form = PasswordResetForm(request.POST)
         if form.is_valid():
             user = User.objects.get(email=request.POST.get('email'))
-            if user.has_usable_password():
-                messages.error(request,  ErrorList(["This account was registered using external authentication, please login using the same method."]))
-                return redirect('login')
-            sendMail(request, user,
-                     'Password reset', 'accounts/passwordResetLink.html',
-                     PasswordResetTokenGenerator, )
+            if user:
+                sendMail(request, user,
+                        'Password reset', 'accounts/passwordResetLink.html',
+                        PasswordResetTokenGenerator, )
             messages.success(request,  ErrorList(["A password reset link was sent out."]))
             return redirect('home')
         else:
@@ -193,7 +194,8 @@ class passwordResetView(View):
         user = User.objects.get(id=uid)
         form = SetPasswordForm(user=user, data=request.POST)
         if form.is_valid():
-            form.save()     
+            user.set_password(request.POST.get('new_password1'))
+            user.save()
             update_session_auth_hash(request, user)
             messages.success(request,  ErrorList(["Password changed succesfully."]))
             return redirect('home')
