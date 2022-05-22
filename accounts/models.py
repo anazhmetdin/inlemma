@@ -2,8 +2,9 @@ from django.db import models
 from django.dispatch import receiver
 from django.contrib.auth.models import User
 from django.forms import ValidationError
-from .utils import randomUsername, validUsername, validEmail
+from .utils import randomUsername, validUsername
 
+User._meta.get_field('email')._unique = True
 
 class profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)

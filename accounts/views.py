@@ -1,4 +1,3 @@
-from xml.dom import ValidationErr
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, update_session_auth_hash
 from django.contrib.auth.models import User
@@ -9,7 +8,7 @@ from django.forms.utils import ErrorList
 from django.views import View
 from django.utils.encoding import  force_str
 from django.utils.http import urlsafe_base64_decode
-from .utils import sendMail, ConfirmationTokenGenerator, emailIsValid, validEmail
+from .utils import sendMail, ConfirmationTokenGenerator, emailIsValid
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 
 class loginView(View):
@@ -93,12 +92,11 @@ class activateView(View):
                 return redirect('home')
             else:
                 try:
-                    validEmail(email)
+                    request.user.email = email
+                    request.user.save()
                 except Exception as e:
                     messages.error(request, ErrorList(["This email is linked to another account."]) )
                     return redirect('home')
-                request.user.email = email
-                request.user.save()
 
         sendMail(request, request.user,
                  'Confirm your email', 'accounts/confirmation.html',
@@ -170,13 +168,13 @@ class passwordResetView(View):
         try:
             uid = force_str(urlsafe_base64_decode(uidb64))
         except Exception as e:
+            messages.error(request,  ErrorList(['Invalid link.']))
             return redirect('home')
 
         user = User.objects.get(id=uid)
         form = SetPasswordForm(user=user, data=request.POST)
         if form.is_valid():
-            user.set_password(form.cleaned_data['new_password1'])  
-            user.save()      
+            form.save()     
             update_session_auth_hash(request, user)
             messages.success(request,  ErrorList(["Password changed succesfully."]))
             return redirect('home')
