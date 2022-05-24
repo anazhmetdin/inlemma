@@ -1,4 +1,3 @@
-import email
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, update_session_auth_hash, authenticate
 from django.contrib.auth.models import User
@@ -126,7 +125,7 @@ class activateView(View):
 class passwordChangeView(View):
     def get(self, request):
         if not request.user.has_usable_password():
-            messages.error(request,  ErrorList(["This account was registered using external authentication, please login using the same method."]))
+            messages.error(request,  ErrorList(["This account was registered using external authentication, you could login using the same method."]))
             messages.error(request,  ErrorList(["You can set a password to be used in logging-in through setting an email and a password."]))
             return redirect('passwordResetForm')
         context = {'form': PasswordChangeForm(request.user)}
