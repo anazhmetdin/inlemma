@@ -6,6 +6,7 @@
 {% block head %}
     {{ block.super }}
     <link rel="stylesheet" type="text/css" href="{% static 'profiles/css/profile.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'posts/css/post.css' %}" />
 {% endblock head %}
 
 {% block body %}
@@ -13,5 +14,8 @@
 
     {% include 'profiles/profile_header.html' %}
 
+    {% for post in posts %}
+        {% include 'posts/post.html' with post=post%}
+    {% endfor %}
 
 {% endblock body %}
