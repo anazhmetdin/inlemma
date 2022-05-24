@@ -14,8 +14,40 @@
 
     {% include 'profiles/profile_header.html' %}
 
-    {% for post in posts %}
-        {% include 'posts/post.html' with post=post%}
-    {% endfor %}
+    <div class="posts infinite-container">
+        {% for post in posts %}
+            {% include 'posts/post.html' with post=post %}
+        {% endfor %}
+    </div>
+
+    <div class="d-flex d-none position-fixed" style="top:35vh;left:46vw">
+        <button class="btn btn-primary loading">
+            <span class="spinner-border spinner-border-sm"></span>
+            Please wait...
+        </button>
+    </div>
+
+    {% if page_obj.has_next %}
+        <a class="infinite-more-link" href="?page={{page_obj.next_page_number}}"></a>
+    {% endif %}
+
+    <script src="{% static 'profiles/js/jquery.waypoints.min.js' %}"></script>
+    <script src="{% static 'profiles/js/infinite.min.js' %}"></script>
+
+    <script>
+        var infinite = new Waypoint.Infinite({
+            element: $('.infinite-container')[0],
+
+            offset: 'bottom-in-view',
+
+            onBeforePageLoad: function () {
+                $('.loading').show();
+            },
+            onAfterPageLoad: function () {
+                $('.loading').hide();
+            }
+
+        });
+    </script>
 
 {% endblock body %}
