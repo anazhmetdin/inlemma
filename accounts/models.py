@@ -1,14 +1,10 @@
 from django.db import models
 from django.dispatch import receiver
 from django.contrib.auth.models import User
-from django.forms import ValidationError
+from profiles.models import profile
 from .utils import randomUsername, validUsername
 
 User._meta.get_field('email')._unique = True
-
-class profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    mail_activated = models.BooleanField(default=False)
 
 @receiver(models.signals.post_save, sender=User)
 def user_created(sender, instance, created, **kwargs):

@@ -1,0 +1,27 @@
+.profile_header {
+    background-color: darkolivegreen;
+    border-radius: 1em;
+    width: 100%;
+    padding: 2em;
+}
+
+.profile_picture {
+    width: 8em;
+}
+
+.username {
+    color: inherit;
+    text-decoration: none;
+    margin: 0.5em;
+}
+
+.bio {
+    margin: 0.5em;
+    max-width: 69%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 5; /* number of lines to show */
+            line-clamp: 5; 
+    -webkit-box-orient: vertical;
+}

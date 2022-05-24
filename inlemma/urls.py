@@ -20,4 +20,5 @@ urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),
     path('', include('social_django.urls', namespace='social')),
     path('', include('accounts.urls')),
+    path('profile/', include('profiles.urls')),
 ]

@@ -1,0 +1,17 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}{{ user.username }} - inlemma{% endblock title %}
+
+{% block head %}
+    {{ block.super }}
+    <link rel="stylesheet" type="text/css" href="{% static 'profiles/css/profile.css' %}" />
+{% endblock head %}
+
+{% block body %}
+    {{ block.super }}
+
+    {% include 'profiles/profile_header.html' %}
+
+
+{% endblock body %}
