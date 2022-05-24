@@ -24,4 +24,6 @@
     -webkit-line-clamp: 6; /* number of lines to show */
             line-clamp: 6; 
     -webkit-box-orient: vertical;
+    margin-top: 1em;
+    margin-bottom: 0;
 }

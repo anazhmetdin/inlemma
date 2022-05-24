@@ -1,7 +1,7 @@
 {% extends 'main/base.html' %}
 {% load static %}
 
-{% block title %}{{ user.username }} - inlemma{% endblock title %}
+{% block title %}{{ profileUser.username }} - inlemma{% endblock title %}
 
 {% block head %}
     {{ block.super }}
@@ -12,12 +12,16 @@
 {% block body %}
     {{ block.super }}
 
-    {% include 'profiles/profile_header.html' %}
+    {% include 'profiles/profile_header.html' with user=profileUser%}
 
     <div class="posts infinite-container">
-        {% for post in posts %}
-            {% include 'posts/post.html' with post=post %}
-        {% endfor %}
+        {% if posts %}
+            {% for post in posts %}
+                {% include 'posts/post.html' with post=post %}
+            {% endfor %}
+        {% else %}
+            {% include 'posts/emptyPost.html' with post=post %}
+        {% endif %}
     </div>
 
     <div class="d-flex d-none position-fixed" style="top:35vh;left:46vw">
