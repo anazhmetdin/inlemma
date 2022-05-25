@@ -1,4 +1,6 @@
 <div class="d-flex flex-column align-center post infinite-item">
-    <h2 class="post_title"> {{ post.title }} </h2>
+    {% if post.title %}
+        <h2 class="post_title"> {{ post.title }} </h2>
+    {% endif %}
     <p class="post_body"> {{ post.body }} </p>
 </div>

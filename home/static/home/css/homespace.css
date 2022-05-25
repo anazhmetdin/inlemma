@@ -1,0 +1,51 @@
+.post_option {
+    margin-right: 1.5em;
+}
+
+#post_form {
+    width: 100%;
+}
+
+#post_options {
+    background-color: gainsboro;
+    padding: 0.5em;
+    border-radius: 1em;
+    display: inline-block;
+    margin-bottom: 0.5em;
+}
+
+.post_header_button {  
+    border-radius: 1em;
+    padding: 0.5em 1em;
+    margin-right: 0.5em;
+    margin-bottom: 0.5em;
+}
+
+/* #post_button {
+} */
+
+/* #save_button {
+} */
+
+.resizable_textarea {
+    min-height: 8em;
+    max-height: 30em;
+}
+
+.newpost {
+    resize: none;
+    border-style: none;
+    border-width: 0;
+    padding: 1em;
+    width: 100%;
+}
+
+#id_title {
+    overflow-x: auto;
+    border-radius: 0;
+}
+
+input:focus,
+textarea:focus {
+    outline: 0;
+}
