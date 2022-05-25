@@ -52,8 +52,6 @@ textarea:focus {
 
 .django-ckeditor-widget {
     width: 100%;
-    transform:translate3d();
-    -webkit-transform:translate3d(0,0,0);
 }
 
 #cke_id_body {
