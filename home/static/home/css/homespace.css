@@ -21,6 +21,37 @@
     margin-bottom: 0.5em;
 }
 
+#post_form {
+    padding: 0.75em;
+    background-color: darkkhaki;
+    border-radius: 1em;
+}
+
+@media only screen and (max-width: 385px) {
+    #posting_buttons {
+        flex-wrap: wrap;
+    }
+    #post_button {
+        margin-bottom: 0.5em;
+    }
+    .post_option {
+        margin-left: 1em;
+    }
+}
+
+@media only screen and (max-width: 330px) {
+    #newPostHeader {
+        flex-wrap: wrap;
+    }
+    #posting_buttons {
+        width: 100%;
+        justify-content: space-between;
+    }
+    #save_button {
+        margin-right: 0;
+    }
+}
+
 /* #post_button {
 } */
 
