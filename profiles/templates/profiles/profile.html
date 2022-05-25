@@ -17,7 +17,7 @@
     <div class="posts infinite-container">
         {% if posts %}
             {% for post in posts %}
-                {% include 'posts/post.html' with post=post %}
+                {% include 'posts/post.html' with post=post class="infinite-item" %}
             {% endfor %}
         {% else %}
             {% include 'posts/emptyPost.html' with post=post %}
@@ -35,23 +35,8 @@
         <a class="infinite-more-link" href="?page={{page_obj.next_page_number}}"></a>
     {% endif %}
 
-    <script src="{% static 'profiles/js/jquery.waypoints.min.js' %}"></script>
-    <script src="{% static 'profiles/js/infinite.min.js' %}"></script>
-
-    <script>
-        var infinite = new Waypoint.Infinite({
-            element: $('.infinite-container')[0],
-
-            offset: 'bottom-in-view',
-
-            onBeforePageLoad: function () {
-                $('.loading').show();
-            },
-            onAfterPageLoad: function () {
-                $('.loading').hide();
-            }
-
-        });
-    </script>
+    <script src="{% static 'main/js/jquery.waypoints.min.js' %}"></script>
+    <script src="{% static 'main/js/infinite.min.js' %}"></script>
+    <script src="{% static 'main/js/infiniteScroll.js' %}"></script>
 
 {% endblock body %}

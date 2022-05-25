@@ -10,7 +10,8 @@ urlpatterns = [
     path('', include('social_django.urls', namespace='social')),
     path('', include('accounts.urls')),
     path('profile/', include('profiles.urls')),
-    re_path(r'^ckeditor/upload/', login_required(upload), name='ckeditor_upload'),
+    path('post/', include('posts.urls')),
+    # re_path(r'^ckeditor/upload/', login_required(upload), name='ckeditor_upload'),
     re_path(r'^ckeditor/', include('ckeditor_uploader.urls')),
 ]
 

@@ -1,4 +1,4 @@
-from django.shortcuts import redirect, render
+from django.http import Http404
 from django.views.generic.list import ListView
 from django.contrib.auth.models import User
 from posts.models import post
@@ -11,11 +11,14 @@ class profileView(ListView):
 
     def get_queryset(self):
         user_query = User.objects.filter(username__iexact=self.kwargs['username'])
-        
+        isOwner = False
+        user = None
+
         if user_query:
             user = user_query.get()
-
-        isOwner = user.username == self.request.user.username
+            isOwner = user.username == self.request.user.username
+        else:
+            raise Http404
 
         self.profileUser = user
         self.isOwner = isOwner
