@@ -27,11 +27,6 @@
 /* #save_button {
 } */
 
-.resizable_textarea {
-    min-height: 8em;
-    max-height: 30em;
-}
-
 .newpost {
     resize: none;
     border-style: none;
@@ -41,8 +36,8 @@
 }
 
 #id_title {
-    overflow-x: auto;
-    border-radius: 0;
+    /* overflow-x: auto; */
+    height: 1em;
 }
 
 input:focus,
@@ -62,4 +57,15 @@ textarea:focus {
     padding: 0.5em;
     border-radius: 1em;
     background-color: white;
+}
+
+#dummyNewPost::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: rgba(171, 171, 171, 0.8);
+    font-size: small;
+    padding: 4px;
+    font-family: sans-serif, Arial, Verdana, "Trebuchet MS", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+#newPostBody {
+    display: none;
 }

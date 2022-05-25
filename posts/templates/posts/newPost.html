@@ -42,18 +42,29 @@
     </div>
 
     <div id="newPostEntries">
-        <input 
-        class="newpost"
+        <textarea 
+        class="resizable_textarea newpost"
         id="{{ form.title.id_for_label }}"
         name="{{ form.title.html_name }}"
         type="text" class="form-control"
-        placeholder="Title" maxlength="128">
-        </input>
+        placeholder="Title"></textarea>
         
-        {{ form.media }}
-        {{ form.body }}
+        <textarea 
+        id="dummyNewPost"
+        style="height:100px;"
+        class="newpost"
+        type="text" class="form-control"
+        placeholder="Your story..."
+        required></textarea>
+
+        <div id="newPostBody">
+            {{ form.media }}
+            {{ form.body }}
+        </div>
+
     </div>
     
 </form>
 
 <script src="{% static 'home/js/autoHideCK.js' %}"></script>
+<script src="{% static 'main/js/resizableText.js' %}"></script>
