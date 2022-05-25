@@ -52,4 +52,16 @@ textarea:focus {
 
 .django-ckeditor-widget {
     width: 100%;
+    transform:translate3d();
+    -webkit-transform:translate3d(0,0,0);
+}
+
+#cke_id_body {
+   border: 0;
+}
+
+#newPostEntries {
+    padding: 0.5em;
+    border-radius: 1em;
+    background-color: white;
 }

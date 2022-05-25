@@ -41,17 +41,19 @@
         </div>
     </div>
 
-    <input 
-      class="newpost"
-      id="{{ form.title.id_for_label }}"
-      name="{{ form.title.html_name }}"
-      type="text" class="form-control"
-      placeholder="Title" maxlength="128">
-    </input>
-    
-    {{ form.media }}
-    {{ form.body }}
+    <div id="newPostEntries">
+        <input 
+        class="newpost"
+        id="{{ form.title.id_for_label }}"
+        name="{{ form.title.html_name }}"
+        type="text" class="form-control"
+        placeholder="Title" maxlength="128">
+        </input>
+        
+        {{ form.media }}
+        {{ form.body }}
+    </div>
     
 </form>
 
-<script src="{% static 'main/js/resizableText.js' %}"></script>
+<script src="{% static 'home/js/autoHideCK.js' %}"></script>
