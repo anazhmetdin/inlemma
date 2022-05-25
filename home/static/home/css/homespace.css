@@ -49,3 +49,7 @@ input:focus,
 textarea:focus {
     outline: 0;
 }
+
+.django-ckeditor-widget {
+    width: 100%;
+}

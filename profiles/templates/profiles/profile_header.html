@@ -2,7 +2,7 @@
 
 <div class="d-flex flex-column align-items-center profile_header">
     <img class="rounded-circle profile_picture" loading="lazy"
-    src="{% static 'img/profile_pictures/default.png' %}" />
+    src="/img/profile_pictures/default.png" />
     <a class="username" href="{% url 'profile' username=user.username %}">@{{ user.username }}</a>
     <p class="bio text-center"> {{ user.profile.bio }} </p>
 </div>

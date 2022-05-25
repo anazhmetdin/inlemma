@@ -23,7 +23,6 @@ class loginView(View):
     def post(self, request):        
         username = request.POST.get("username")
         password = request.POST.get("password")
-        print(username, password    )
         if username != "" and password != "":
             user = None
             if "@" not in username:

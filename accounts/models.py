@@ -27,3 +27,4 @@ def user_created(sender, instance, created, **kwargs):
 @receiver(models.signals.post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):
     instance.profile.save()
+    instance.settings.save()

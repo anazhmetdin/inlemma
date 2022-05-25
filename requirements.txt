@@ -4,3 +4,5 @@ fontawesomefree
 social-auth-app-django
 six
 Pillow
+django-ckeditor
+django-bleach

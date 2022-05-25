@@ -18,4 +18,4 @@ class PostForm(ModelForm):
 
     class Meta:
         model = post
-        fields = ['anonymous', 'comments', 'messages', 'HTML', 'title', 'body']
+        fields = ['anonymous', 'comments', 'messages', 'title', 'body']

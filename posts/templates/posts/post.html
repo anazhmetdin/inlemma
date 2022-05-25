@@ -1,6 +1,8 @@
+{% load bleach_tags %}
+
 <div class="d-flex flex-column align-center post infinite-item">
     {% if post.title %}
         <h2 class="post_title"> {{ post.title }} </h2>
     {% endif %}
-    <p class="post_body"> {{ post.body }} </p>
+    <div class="post_body"> {{ post.body|bleach }} </div>
 </div>

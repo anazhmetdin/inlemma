@@ -1,0 +1,57 @@
+{% load static %}
+
+<form id="post_form" action="{% url 'home' %}" method=POST>
+    {% csrf_token %}
+
+    {% comment %} {{ form.title.errors }} {% endcomment %}
+    {% comment %} {{ form.body.errors }} {% endcomment %}
+    
+    <div class="d-flex align-items-center">
+
+        <!-- Submit button -->
+        <div class="flex-wrap">
+            <button type="submit" value="Submit" name="publish" id="post_button" class="btn btn-primary post_header_button post_button">Post</button>
+            <button type="submit" value="Submit" name="save" id="save_button" class="btn btn-primary post_header_button post_button">Save</button>
+        </div>
+
+        <div class="d-flex flex-wrap flex-grow-1" id="post_options">
+            <div class="form-check form-switch post_option">
+                <input class="form-check-input" type="checkbox" role="switch"
+                    id="{{ form.anonymous.id_for_label }}"
+                    {% if anonymous %} checked {% endif %}
+                    name="{{ form.anonymous.html_name }}">
+                <label class="form-check-label" for="{{ form.anonymous.id_for_label }}">Anonymous</label>
+            </div>
+    
+            <div class="form-check form-switch post_option">
+                <input class="form-check-input" type="checkbox" role="switch"
+                    id="{{ form.comments.id_for_label }}"
+                    {% if comments %} checked {% endif %}
+                    name="{{ form.comments.html_name }}">
+                <label class="form-check-label" for="{{ form.comments.id_for_label }}">Comments</label>
+            </div>
+            
+            <div class="form-check form-switch post_option">
+                <input class="form-check-input" type="checkbox" role="switch"
+                    id="{{ form.messages.id_for_label }}"
+                    {% if post_messages %} checked {% endif %}
+                    name="{{ form.messages.html_name }}">
+                <label class="form-check-label" for="{{ form.messages.id_for_label }}">Messages</label>
+            </div>
+        </div>
+    </div>
+
+    <input 
+      class="newpost"
+      id="{{ form.title.id_for_label }}"
+      name="{{ form.title.html_name }}"
+      type="text" class="form-control"
+      placeholder="Title" maxlength="128">
+    </input>
+    
+    {{ form.media }}
+    {{ form.body }}
+    
+</form>
+
+<script src="{% static 'main/js/resizableText.js' %}"></script>

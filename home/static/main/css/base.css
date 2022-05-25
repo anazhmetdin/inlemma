@@ -18,6 +18,7 @@
 #main {
     padding: 1em;
     min-height: 100%;
+    max-width: 100em;
 }
 
 html, body {
@@ -55,4 +56,6 @@ header {
 
 footer {
     background-color: green;
+    width: 100%;
+    max-width: 100em;
 }
