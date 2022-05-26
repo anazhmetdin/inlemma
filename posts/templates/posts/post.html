@@ -1,8 +1,25 @@
 {% load bleach_tags %}
 
 <div class="d-flex flex-column align-center post {{ class }}">
+    {% if post.anonymous %}
+        <h1 class="post_user"> Anonymous </h1>
+    {% else %}
+        <a href="{% url 'profile' username=post.user.username %}">
+            <h1 class="post_user"> {{ post.user.username }} </h1>
+        </a>
+    {% endif %}
+
     {% if post.title %}
         <h2 class="post_title"> {{ post.title }} </h2>
     {% endif %}
-    <div class="post_body"> {{ post.body|bleach }} </div>
+
+    <div class="post_body">
+        {% if shortBody %}
+            {{ shortBody }}
+        {% else %}
+            {{ post.body|bleach }}
+        {% endif %}
+    </div>
+
+    <a href="{% url 'post' pid=post.id %}" class="post_data"> {{ post.created_at }} </a>
 </div>
