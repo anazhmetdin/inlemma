@@ -1,7 +1,7 @@
 from django.db import models
 from django.dispatch import receiver
 from django.contrib.auth.models import User
-from profiles.models import profile, settings
+from profiles.models import Profile, Settings
 from .utils import randomUsername, validUsername
 
 User._meta.get_field('email')._unique = True
@@ -9,8 +9,8 @@ User._meta.get_field('email')._unique = True
 @receiver(models.signals.post_save, sender=User)
 def user_created(sender, instance, created, **kwargs):
     if created:
-        profile.objects.create(user=instance)
-        settings.objects.create(user=instance)
+        Profile.objects.create(user=instance)
+        Settings.objects.create(user=instance)
         username = instance.username
         notValid = True
         while notValid:

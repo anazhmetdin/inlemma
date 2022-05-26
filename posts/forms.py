@@ -1,6 +1,6 @@
 from django.core.exceptions import NON_FIELD_ERRORS
 from django.forms import ModelForm
-from .models import post
+from .models import Post
 
 class PostForm(ModelForm):
     
@@ -17,5 +17,5 @@ class PostForm(ModelForm):
 
 
     class Meta:
-        model = post
+        model = Post
         fields = ['anonymous', 'comments', 'messages', 'title', 'body']

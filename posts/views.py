@@ -1,15 +1,15 @@
 from django.http import Http404
 from django.views.generic.list import ListView
-from .models import post, comment
+from .models import Post, Comment
 
 class postView(ListView):
-    model= comment
+    model= Comment
     paginate_by= 1
     template_name= 'posts/postPage.html'
     context_object_name= 'comments'
 
     def get_queryset(self):
-        post_query = post.objects.filter(id=self.kwargs['pid'])
+        post_query = Post.objects.filter(id=self.kwargs['pid'])
         viewable = False
         isOwner = False
         postInstance = None
@@ -30,11 +30,11 @@ class postView(ListView):
 
         try:
             if viewable:
-                comments = comment.objects.filter(post=postInstance).all()
+                comments = Comment.objects.filter(post=postInstance).all()
                 comments = comments.order_by('-id')
             else:
                 raise Http404
-        except comment.DoesNotExist:
+        except Comment.DoesNotExist:
             comments = []
         except Http404:
             raise Http404

@@ -1,10 +1,10 @@
 from django.http import Http404
 from django.views.generic.list import ListView
 from django.contrib.auth.models import User
-from posts.models import post
+from posts.models import Post
 
 class profileView(ListView):
-    model= post
+    model= Post
     paginate_by= 10
     template_name= 'profiles/profile.html'
     context_object_name= 'posts'
@@ -25,11 +25,11 @@ class profileView(ListView):
         
         try:
             if isOwner:
-                posts = post.objects.filter(user=user).all()
+                posts = Post.objects.filter(user=user).all()
             else:
-                posts = post.objects.filter(user=user, anonymous=False, published=True).all()
+                posts = Post.objects.filter(user=user, anonymous=False, published=True).all()
             posts = posts.order_by('-id')
-        except post.DoesNotExist:
+        except Post.DoesNotExist:
             posts = []
         
         return posts

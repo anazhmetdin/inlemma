@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
-class profile(models.Model):
+class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     mail_activated = models.BooleanField(default=False)
     bio = models.CharField(max_length=256, default='')
@@ -10,7 +10,7 @@ class profile(models.Model):
     cover = models.ImageField(upload_to='profile_covers', null=True)
 
 
-class settings(models.Model):
+class Settings(models.Model):
 
     LIGHT = 'li'
     DARK = 'da'
