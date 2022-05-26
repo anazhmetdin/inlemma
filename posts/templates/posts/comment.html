@@ -1,0 +1,14 @@
+<div class="d-flex flex-column align-center comment infinite-item">
+    <div class="comment_user">
+        {% if comment.anonymous %}
+            <a>
+                Anonymous
+            </a>
+        {% else %}
+            <a href="{% url 'profile' username=comment.user.username %}">
+                {{ comment.user.username }}
+            </a>
+        {% endif %}
+    </div>
+    <div class="comment_body"> {{ comment.body }} </div>
+</div>

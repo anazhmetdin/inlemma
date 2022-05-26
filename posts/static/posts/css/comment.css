@@ -1,0 +1,32 @@
+#comments_container {
+    width: 100%;
+    padding: 1em 0.2em 1em 1em;
+    background-color: blanchedalmond;
+    border-radius: 1em;
+    height: 15em;
+}
+
+.comments {
+    max-height: 15em;
+    width: 100%;
+    overflow-y: scroll;
+    padding-right: 0.8em;
+}
+
+.comments::-webkit-scrollbar{
+    height: 1em;
+    width: 0.5em;
+}
+.comments::-webkit-scrollbar-track {
+    background-color: rgba(161, 161, 161, 0);
+}
+
+.comments::-webkit-scrollbar-thumb {
+    border-radius: 1em;
+    background-color: #6d6d6d68;
+}
+
+.post {
+    margin-top: 0;
+    margin-bottom: 1em;
+}

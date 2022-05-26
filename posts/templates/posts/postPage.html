@@ -1,0 +1,46 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}
+    {% if postInstance.title %}
+        {{ postInstance.title }} - inlemma
+    {% else %}
+        {{ postInstance.body|striptags|safe|truncatewords:20 }} - inlemma
+    {% endif %}
+{% endblock title %}
+
+{% block head %}
+    {{ block.super }}
+    <link rel="stylesheet" type="text/css" href="{% static 'posts/css/post.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'posts/css/comment.css' %}" />
+{% endblock head %}
+
+{% block body %}
+    {{ block.super }}
+    {% include 'posts/post.html' with post=postInstance %}
+
+    <div id="comments_container">
+        <div class="comments infinite-container">
+            {% if comments %}
+                {% for comment in comments %}
+                    {% include 'posts/comment.html' with comment=comment %}
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="d-flex d-none position-fixed" style="top:35vh;left:46vw">
+        <button class="btn btn-primary loading">
+            <span class="spinner-border spinner-border-sm"></span>
+            Please wait...
+        </button>
+    </div>
+
+    {% if page_obj.has_next %}
+        <a class="infinite-more-link" href="?page={{page_obj.next_page_number}}"></a>
+    {% endif %}
+
+    <script src="{% static 'main/js/jquery.waypoints.min.js' %}"></script>
+    <script src="{% static 'main/js/infinite.min.js' %}"></script>
+    <script src="{% static 'main/js/infiniteScroll.js' %}"></script>
+{% endblock body %}
