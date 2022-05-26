@@ -1,18 +1,21 @@
 from django.shortcuts import redirect, render
 from django.views import View
 from posts.forms import PostForm
-from profiles.models import settings
+from profiles.models import Settings
 from django.contrib import messages
+# from django.conf import settings
 
 class homeView(View):
     def get(self, request):
         if request.user.is_authenticated:
             if request.user.profile.mail_activated or not request.user.has_usable_password():
-                userSettings = settings.objects.get(user=request.user)
+                userSettings = Settings.objects.get(user=request.user)
                 context = {'form': PostForm(),
                            'anonymous': userSettings.anonymous_posts,
                            'comments': userSettings.posts_comments,
-                           'post_messages': userSettings.posts_messages}
+                           'post_messages': userSettings.posts_messages,
+                        #    'config': settings.CKEDITOR_CONFIGS
+                           }
                 return render(request, 'home/homespace.html', context)
             else:
                 return render(request, 'home/activate.html')

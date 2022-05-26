@@ -18,13 +18,13 @@
 .post_body {
     word-wrap: break-word;
     text-align: justify;
-    overflow: hidden;
+    /* overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
-    -webkit-line-clamp: 6; /* number of lines to show */
+    -webkit-line-clamp: 6;
             line-clamp: 6; 
     -webkit-box-orient: vertical;
-    margin-bottom: 0;
+    margin-bottom: 0; */
 }
 
 .post_body blockquote {
@@ -46,4 +46,36 @@
 .post_body img {
     max-width: 100%;
     object-fit: contain;
+}
+
+.post_body table 
+{
+    border-collapse: collapse;
+    table-layout:fixed;
+    width:100%;
+}
+
+.post_body thead,
+.post_body tbody,
+.post_body tr,
+.post_body th,
+.post_body td {
+  border: inherit;
+}
+
+.post_body pre {
+    background: #f4f4f4;
+    border: 1px solid #ddd;
+    border-left: 3px solid #f36d33;
+    color: #666;
+    page-break-inside: avoid;
+    font-family: monospace;
+    font-size: 15px;
+    line-height: 1.6;
+    margin-bottom: 1.6em;
+    max-width: 100%;
+    overflow: auto;
+    padding: 1em 1.5em;
+    display: block;
+    word-wrap: break-word;
 }

@@ -56,11 +56,23 @@
         style="height:100px;"
         class="newpost"
         type="text" class="form-control"
-        placeholder="Your story..."></textarea>
+        {% comment %} placeholder="Your story..." {% endcomment %}
+        ></textarea>
 
-        <div id="newPostBody">
+        <div id="newPostBody" style="display:none;">
             {{ form.media }}
             {{ form.body }}
+
+            {% comment %} {{ form.media }}
+            <textarea
+            id="{{ form.body.id_for_label }}"
+            name="{{ form.body.html_name }}"
+            ></textarea>
+
+            <script type="text/javascript">
+                CKEDITOR.replace( '{{ form.body.id_for_label }}',
+                                  {{ config.default|safe }} );
+            </script> {% endcomment %}
         </div>
 
     </div>

@@ -68,7 +68,7 @@
 
 #id_title {
     /* overflow-x: auto; */
-    height: 1em;
+    height: 56px;
     max-height: 8em;
 }
 
@@ -91,13 +91,13 @@ textarea:focus {
     background-color: white;
 }
 
-#dummyNewPost::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+/* #dummyNewPost::placeholder {
     color: rgba(171, 171, 171, 0.8);
     font-size: small;
     padding: 4px;
     font-family: sans-serif, Arial, Verdana, "Trebuchet MS", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-}
+} */
 
-#newPostBody {
+/* #newPostBody {
     display: none;
-}
+} */

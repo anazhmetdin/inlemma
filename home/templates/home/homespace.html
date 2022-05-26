@@ -11,7 +11,7 @@
 {% block body %}
     {{ block.super }}
 
-    {% include 'posts/newPost.html' %}    
+    {% include 'posts/newPost.html' with config=config %}    
 
     <h1> Welcome, {{ user.username }} </h1>
     <ul>
