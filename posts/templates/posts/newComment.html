@@ -1,0 +1,50 @@
+{% load static %}
+
+<form id="comment_form" action="{% url 'comment' pid=postInstance.id %}" method=POST>
+    {% csrf_token %}
+
+    {% comment %} {{ form.body.errors }} {% endcomment %}
+    
+    <div class="d-flex align-items-center" id="newCommentHeader">
+
+        <button type="submit" value="Submit" name="publish" id="post_button" class="btn btn-primary comment_header_button">Send</button>
+
+        <div class="d-flex align-items-center flex-grow-1" id="comment_options">
+
+            <div class="d-flex align-content-center flex-wrap">
+                <div class="form-check form-switch comment_option">
+                    <input class="form-check-input" type="checkbox" role="switch"
+                        id="{{ form.anonymous.id_for_label }}"
+                        {% if anonymous %}
+                            checked
+                        {% else %}
+                            {% if must_anonymous %}
+                                checked
+                                disabled
+                            {% endif %}
+                        {% endif %}
+                        name="{{ form.anonymous.html_name }}">
+                    <label class="form-check-label" for="{{ form.anonymous.id_for_label }}">Anonymous</label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="newCommentEntries">
+
+        <div id="newCommentBody">
+    
+            <textarea 
+            class="resizable_textarea newcomment"
+            id="{{ form.body.id_for_label }}"
+            name="{{ form.body.html_name }}"
+            type="text" class="form-control"
+            placeholder="Comment"></textarea>
+
+        </div>
+
+    </div>
+    
+</form>
+
+<script src="{% static 'main/js/resizableText.js' %}"></script>

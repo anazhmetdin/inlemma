@@ -4,11 +4,13 @@
     background-color: blanchedalmond;
     border-radius: 1em;
     height: 15em;
+    overflow: hidden;
 }
 
 .comments {
     max-height: 15em;
     width: 100%;
+    height: 100%;
     overflow-y: scroll;
     padding-right: 0.8em;
 }
@@ -29,4 +31,71 @@
 .post {
     margin-top: 0;
     margin-bottom: 1em;
+}
+
+.comment_option {
+    margin-right: 1.5em;
+}
+
+#comment_form {
+    width: 100%;
+}
+
+#comment_options {
+    background-color: gainsboro;
+    padding: 0.5em;
+    border-radius: 1em;
+    display: inline-block;
+    padding-left: 1em;
+}
+
+.comment_header_button {  
+    border-radius: 1em;
+    padding: 0.5em 1em;
+    margin-right: 0.5em;
+}
+
+#newCommentHeader {
+    margin-bottom: 0.75em;
+}
+
+#comment_form {
+    padding: 0.75em;
+    background-color: darkkhaki;
+    border-radius: 1em;
+}
+
+@media only screen and (max-width: 365px) {
+    #newCommentHeader {
+        flex-wrap: wrap;
+    }
+    #post_button {
+        margin-right: 0;
+        margin-bottom: 0.5em;
+    }
+}
+
+/* #post_button {
+} */
+
+/* #save_button {
+} */
+
+.newcomment {
+    resize: none;
+    border-style: none;
+    border-width: 0;
+    padding: 1em;
+    width: 100%;
+}
+
+input:focus,
+textarea:focus {
+    outline: 0;
+}
+
+#newCommentEntries {
+    padding: 0.5em;
+    border-radius: 1em;
+    background-color: white;
 }
