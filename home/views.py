@@ -31,5 +31,4 @@ class homeView(View):
         else:
             for error in form.errors:
                 messages.error(request, error+form.errors[error].as_text())
-            context = {'form': PostForm(data=request.POST)}
-            return render(request, 'home/homespace.html', context)
+            return redirect('home')
