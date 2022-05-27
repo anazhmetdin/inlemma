@@ -52,7 +52,8 @@
 {
     border-collapse: collapse;
     table-layout:fixed;
-    width:100%;
+    max-width: 100%;
+    object-fit: contain;
 }
 
 .post_body thead,

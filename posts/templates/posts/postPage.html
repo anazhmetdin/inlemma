@@ -21,6 +21,9 @@
 
     <div id="comments_container">
         <div class="comments infinite-container">
+            {% if commentForm %}
+                {% include 'posts/newComment.html' with form=commentForm %}
+            {% endif %}
             {% if comments %}
                 {% for comment in comments %}
                     {% include 'posts/comment.html' with comment=comment %}
