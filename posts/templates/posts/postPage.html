@@ -3,7 +3,7 @@
 
 {% block title %}
     {% if postInstance.title %}
-        {{ postInstance.title }} - inlemma
+        {{ postInstance.title|slice:"0:20" }} - inlemma
     {% else %}
         {{ postInstance.body|striptags|safe|slice:"0:20" }} - inlemma
     {% endif %}
