@@ -49,13 +49,13 @@
         id="{{ form.title.id_for_label }}"
         name="{{ form.title.html_name }}"
         type="text" class="form-control"
-        placeholder="Title"></textarea>
+        placeholder="Title">{% if title %}{{ title }}{% endif %}</textarea>
         
         <textarea 
         id="dummyNewPost"
         style="height:100px;"
         class="newpost"
-        type="text" class="form-control"
+        type="text" class="form-control"        
         {% comment %} placeholder="Your story..." {% endcomment %}
         ></textarea>
 
