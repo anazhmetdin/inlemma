@@ -49,12 +49,9 @@ class postView(ListView):
         context = super().get_context_data(**kwargs)
         context['isOwner'] = self.isOwner
         context['postInstance'] = self.postInstance
-        if self.postInstance.comments:
+        if self.postInstance.comments and self.request.user.is_authenticated:
             context['commentForm'] = CommentForm(user=self.request.user)
-            if self.request.user.is_authenticated:
-                context['anonymous'] = self.request.user.settings.anonymous_comments
-            else:
-                context['must_anonymous'] = True
+            context['anonymous'] = self.request.user.settings.anonymous_comments
         return context
 
 

@@ -5,7 +5,7 @@
     {% if postInstance.title %}
         {{ postInstance.title }} - inlemma
     {% else %}
-        {{ postInstance.body|striptags|safe|truncatewords:20 }} - inlemma
+        {{ postInstance.body|striptags|safe|slice:"0:20" }} - inlemma
     {% endif %}
 {% endblock title %}
 

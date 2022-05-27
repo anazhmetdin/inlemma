@@ -17,11 +17,6 @@
                         id="{{ form.anonymous.id_for_label }}"
                         {% if anonymous %}
                             checked
-                        {% else %}
-                            {% if must_anonymous %}
-                                checked
-                                disabled
-                            {% endif %}
                         {% endif %}
                         name="{{ form.anonymous.html_name }}">
                     <label class="form-check-label" for="{{ form.anonymous.id_for_label }}">Anonymous</label>
