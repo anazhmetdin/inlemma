@@ -4,6 +4,7 @@ from posts.forms import PostForm
 from profiles.models import Settings
 from django.contrib import messages
 from django.forms.utils import ErrorList
+from django.http import JsonResponse
 # from django.conf import settings
 
 class homeView(View):
@@ -32,14 +33,26 @@ class homeView(View):
         form = PostForm(user=request.user, data=request.POST)
         if form.is_valid():
             form.save()
-            return redirect("home")
+            # return redirect("home")
+            
+            response = {
+                'message':'Your post has been submitted successfully.'
+            }
+            status_code = 200
         else:
-            if form.errors:
-                for error in form.errors:
-                    messages.error(request, error+form.errors[error].as_text())
-            else:
-                messages.error(request, ErrorList(["Something went wrong, please try again"]))
-            context = self.get_context_data(request)
-            context["title"] = form.data.get("title")
-            context["form"] = form
-            return render(request, 'home/homespace.html', context)
+            # if form.errors:
+            #     for error in form.errors:
+            #         messages.error(request, error+form.errors[error].as_text())
+            # else:
+            #     messages.error(request, ErrorList(["Something went wrong, please try again"]))
+
+            # context = self.get_context_data(request)
+            # context["title"] = form.data.get("title")
+            # context["form"] = form
+
+            response = {
+                'message':'Something went wront, please try again.'
+            }
+            status_code = 400
+            # return render(request, 'home/homespace.html', context)
+        return JsonResponse(response, status=status_code)

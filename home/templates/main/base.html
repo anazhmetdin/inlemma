@@ -20,14 +20,16 @@
             {% include 'main/header.html' %}
         {% endblock header %}
 
-        {% if messages %}
-            <div id="messages" class="alert alert-warning alert-dismissible fade show" role="alert">
-                {% for message in messages %}
-                    {{ message }}
-                {% endfor %}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        {% endif %}
+        <div id="messages_wrapper">
+            {% if messages %}
+                <div id="messages" class="alert alert-warning alert-dismissible fade show" role="alert">
+                    {% for message in messages %}
+                        {{ message }}
+                    {% endfor %}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endif %}
+        </div>
 
         <div class="d-flex flex-column align-items-center" id="main">
 
