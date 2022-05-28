@@ -35,8 +35,11 @@
         <a class="infinite-more-link" href="?page={{page_obj.next_page_number}}"></a>
     {% endif %}
 
+{% endblock body %}
+
+{% block js %}
+    {{ block.super }} 
     <script src="{% static 'main/js/jquery.waypoints.min.js' %}"></script>
     <script src="{% static 'main/js/infinite.min.js' %}"></script>
     <script src="{% static 'main/js/infiniteScroll.js' %}"></script>
-
-{% endblock body %}
+{% endblock js %}

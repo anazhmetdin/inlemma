@@ -21,3 +21,50 @@
     </ul>
 
 {% endblock body %}
+
+{% block js %}
+    {{ block.super }} 
+    <script src="{% static 'home/js/autoHideCK.js' %}"></script>
+    <script src="{% static 'main/js/resizableText.js' %}"></script>
+    <script>
+        $('#post_form').submit(function (e) {
+            e.preventDefault();
+            $.ajax({
+                type : "POST",
+                data: {
+                    anonymous: $('#{{ form.anonymous.id_for_label }}').val(),
+                    comments: $('#{{ form.comments.id_for_label }}').val(),
+                    messages: $('#{{ form.messages.id_for_label }}').val(),
+                    title : $('#{{ form.title.id_for_label }}').val(),
+                    body : $('#{{ form.body.id_for_label }}').val(),
+                    csrfmiddlewaretoken: "{{ csrf_token }}",
+                    dataType: "json",
+                },
+                
+                success: function(response){
+                    var title = document.getElementById("{{ form.title.id_for_label }}");
+                    title.value = "";
+                    for (var instance in CKEDITOR.instances)
+                        CKEDITOR.instances[instance].setData("");
+                    var messages = document.getElementById("messages_wrapper");
+                    messages.innerHTML += `<div id="messages" class="alert alert-warning alert-dismissible fade show" role="alert">
+                        <ul>
+                            <li>`+response["message"]+`</li>
+                        </ul>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>`;
+                },
+            
+                error: function(response) {
+                    var messages = document.getElementById("messages_wrapper");
+                    messages.innerHTML += `<div id="messages" class="alert alert-warning alert-dismissible fade show" role="alert">
+                        <ul>
+                            <li>`+response["responseJSON"]["message"]+`</li>
+                        </ul>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>`
+                }        
+            });
+        });    
+    </script>
+{% endblock js %}

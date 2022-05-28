@@ -1,5 +1,3 @@
-{% load static %}
-
 <form id="comment_form" action="{% url 'comment' pid=postInstance.id %}" method=POST>
     {% csrf_token %}
 
@@ -42,5 +40,3 @@
     </div>
     
 </form>
-
-<script src="{% static 'main/js/resizableText.js' %}"></script>
