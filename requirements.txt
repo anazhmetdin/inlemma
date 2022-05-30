@@ -1,8 +1,12 @@
 django
-psycopg2
+psycopg2-binary
 fontawesomefree
 social-auth-app-django
 six
 Pillow
 django-ckeditor
 django-bleach
+celery
+redis
+django_celery_results
+django_celery_beat
