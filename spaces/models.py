@@ -63,7 +63,7 @@ class PostProcessor(threading.Thread):
 
     def run(self):
         cleanedBody = bleach.clean(self.processedPost.body,
-                                   tags=settings.BLEACH_ALLOWED_STYLES,
+                                   tags=settings.BLEACH_ALLOWED_TAGS,
                                    attributes=settings.BLEACH_ALLOWED_ATTRIBUTES)
         body = html2text(cleanedBody)
         self.processedPost.body = self.process(body)
