@@ -29,17 +29,12 @@
     <script>
         $('#post_form').submit(function (e) {
             e.preventDefault();
+            for (var instance in CKEDITOR.instances)
+                CKEDITOR.instances[instance].updateElement();
+            var data = $(this).serialize();
             $.ajax({
                 type : "POST",
-                data: {
-                    anonymous: $('#{{ form.anonymous.id_for_label }}').val(),
-                    comments: $('#{{ form.comments.id_for_label }}').val(),
-                    messages: $('#{{ form.messages.id_for_label }}').val(),
-                    title : $('#{{ form.title.id_for_label }}').val(),
-                    body : $('#{{ form.body.id_for_label }}').val(),
-                    csrfmiddlewaretoken: "{{ csrf_token }}",
-                    dataType: "json",
-                },
+                data: data,
                 
                 success: function(response){
                     var title = document.getElementById("{{ form.title.id_for_label }}");
