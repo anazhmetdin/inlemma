@@ -5,6 +5,7 @@ from django.views.generic.list import ListView
 from .models import Post, Comment
 from .forms import CommentForm
 from django.contrib import messages
+from spaces.utils import inlemmaEngine
 
 class postView(ListView):
     model= Comment
@@ -49,6 +50,7 @@ class postView(ListView):
         context = super().get_context_data(**kwargs)
         context['isOwner'] = self.isOwner
         context['postInstance'] = self.postInstance
+        context['space'] = inlemmaEngine.similarPosts(self.postInstance)
         if self.postInstance.comments and self.request.user.is_authenticated:
             context['commentForm'] = CommentForm(user=self.request.user)
             context['anonymous'] = self.request.user.settings.anonymous_comments
