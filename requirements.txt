@@ -11,3 +11,5 @@ redis
 django-celery-results
 django-celery-beat
 gensim
+nltk
+html2text
