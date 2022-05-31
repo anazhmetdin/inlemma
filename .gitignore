@@ -18,3 +18,4 @@ img/
 # Specific files #
 ##################
 inlemma/settings.py
+spaces/D2Vmodels/*

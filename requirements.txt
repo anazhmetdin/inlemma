@@ -8,5 +8,6 @@ django-ckeditor
 django-bleach
 celery
 redis
-django_celery_results
-django_celery_beat
+django-celery-results
+django-celery-beat
+gensim
