@@ -53,7 +53,38 @@
     <script src="{% static 'main/js/infinite.min.js' %}"></script>
     <script src="{% static 'main/js/resizableText.js' %}"></script>
     <script>
+
+        const container = document.querySelector("#comments_container");
+        var comments =  document.querySelectorAll(".comment");
+        var lastComment = comments[comments.length-1];
+
+        var infinite = new Waypoint.Infinite({
+            element: $('.infinite-container')[0],
         
+            offset: function() {
+                if (container.getBoundingClientRect().bottom > lastComment.getBoundingClientRect().y) {
+                    return '100%';
+                }
+                return 0;
+            },
+        
+            onBeforePageLoad: function () {
+                $('.loading').show();
+            },
+            onAfterPageLoad: function () {
+                $('.loading').hide();
+            }
+        
+        });
+        
+        $('.infinite-container')[0].addEventListener('scroll', function(e) {
+            comments =  document.querySelectorAll(".comment");
+            lastComment = comments[comments.length - 1];
+            if (container.getBoundingClientRect().bottom > lastComment.getBoundingClientRect().y) {
+                Waypoint.refreshAll();
+            }
+        });
+
         $('#comment_form').submit(function (e) {
             e.preventDefault();
             var data = $(this).serialize();
