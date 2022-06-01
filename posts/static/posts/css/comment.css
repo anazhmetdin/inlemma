@@ -3,12 +3,11 @@
     padding: 1em 0.2em 1em 1em;
     background-color: blanchedalmond;
     border-radius: 1em;
-    height: 15em;
+    height: fit-content;
     overflow: hidden;
 }
 
 .comments {
-    max-height: 15em;
     width: 100%;
     height: 100%;
     overflow-y: scroll;
@@ -81,12 +80,14 @@
 /* #save_button {
 } */
 
-.newcomment {
+#id_body {
     resize: none;
     border-style: none;
     border-width: 0;
     padding: 1em;
     width: 100%;
+    min-height: 70px;
+    max-height: 20em;
 }
 
 input:focus,
