@@ -22,8 +22,12 @@ class ProcessedPost(models.Model):
 
 @receiver(models.signals.post_save, sender=Post)
 def post_saved(sender, instance, **kwargs):
+    try:
+        body = instance.title + " " + instance.body
+    except:
+        body = instance.body
     processedPost = ProcessedPost.objects.create(post=instance,
-                                                 body=instance.body)
+                                                 body=body)
     PostProcessor(processedPost).run()
 
 

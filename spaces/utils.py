@@ -47,7 +47,6 @@ class inlemmaCore():
 
     def similarPosts(self, post, n=5):
         similars = self.__similarPosts(post, n)
-        print(similars)
         return [Post.objects.get(id=int(similiar[0])) for similiar in similars]
 
     def __similarPosts(self, post, n):
