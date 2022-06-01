@@ -16,8 +16,8 @@ app.config_from_object('django.conf:settings', namespace='CELERY')
 
 # Celery Beat Settings
 app.conf.beat_schedule = {
-    'update-D2Vmodel-every-night': {
-        'task': 'updateD2Vmodel',
+    'update-D2Vmodel-daily': {
+        'task': 'spaces.tasks.updateD2Vmodel',
         'schedule': crontab(hour=0, minute=0)
     },
 }
