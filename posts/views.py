@@ -1,4 +1,4 @@
-from django.http import Http404
+from django.http import Http404, JsonResponse
 from django.shortcuts import redirect
 from django.views import View
 from django.views.generic.list import ListView
@@ -65,10 +65,20 @@ class commentView(View):
             raise Http404
 
         form = CommentForm(data=request.POST, user=request.user, post=post)
-        if form.is_valid():
+        if post.comments and form.is_valid():
             form.save()
+            response = {
+                'message':'Your comment has been published successfully.'
+            }
+            status_code = 200
         else:
-            for error in form.errors:
-                messages.error(request, error+form.errors[error].as_text())
+            # for error in form.errors:
+            #     messages.error(request, error+form.errors[error].as_text())
+            
+            response = {
+                'message':"Couldn't publish your comment."
+            }
+            status_code = 400
 
-        return redirect('post', pid=pid)
+        # return redirect('post', pid=pid)
+        return JsonResponse(response, status=status_code)

@@ -51,6 +51,57 @@
     {{ block.super }} 
     <script src="{% static 'main/js/jquery.waypoints.min.js' %}"></script>
     <script src="{% static 'main/js/infinite.min.js' %}"></script>
-    <script src="{% static 'main/js/infiniteScroll.js' %}"></script>
     <script src="{% static 'main/js/resizableText.js' %}"></script>
+    <script>
+        
+        $('#comment_form').submit(function (e) {
+            e.preventDefault();
+            var data = $(this).serialize();
+            $.ajax({
+                type : "POST",
+                data: data,
+                url: "{% url 'comment' pid=postInstance.id %}",
+                
+                success: function(response){
+                    
+                    var messages = document.getElementById("messages_wrapper");
+                    messages.innerHTML += `<div id="messages" class="alert alert-warning alert-dismissible fade show" role="alert">
+                        <ul>
+                            <li>`+response["message"]+`</li>
+                        </ul>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>`;
+                    
+                    var commentForm = document.getElementById("comment_form");
+                    commentForm.insertAdjacentHTML("afterend", `{% include 'posts/templateComment.html' %}`);
+                    
+                    var newCommentUser = document.querySelector("#template_comment .comment_user");
+                    if (document.getElementById('{{ commentForm.anonymous.id_for_label }}').checked) {
+                        newCommentUser.innerHTML = `<a> Anonymous </a>`;
+                    } else {
+                        newCommentUser.innerHTML = `<a href="{% url 'profile' username=user.username %}"> {{ user.username }} </a>`;
+                    }
+                    
+                    var newCommentBody = document.querySelector("#template_comment .comment_body");
+                    newCommentBody.textContent = $('#{{ commentForm.body.id_for_label }}').val();
+                    
+                    var body = document.getElementById("{{ commentForm.body.id_for_label }}");
+                    body.value = "";
+
+                    var newComment = document.getElementById('template_comment');
+                    newComment.removeAttribute('id');
+                },
+            
+                error: function(response) {
+                    var messages = document.getElementById("messages_wrapper");
+                    messages.innerHTML += `<div id="messages" class="alert alert-warning alert-dismissible fade show" role="alert">
+                        <ul>
+                            <li>`+response["responseJSON"]["message"]+`</li>
+                        </ul>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>`
+                }        
+            });
+        });    
+    </script>
 {% endblock js %}
