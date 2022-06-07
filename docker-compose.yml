@@ -9,6 +9,8 @@ services:
     volumes:
       - ./redis-data:/data
     restart: always
+    env_file:
+      - ./.env
   
   db:
     image: postgres
