@@ -5,13 +5,14 @@ from posts.models import Post
 from django.conf import settings
 from .models import ProcessedPost
 
+MIN_WORD_COUNT = 75
 
 class TaggedCorpus:        
     def __iter__(self):
         for processedPost in ProcessedPost.objects.all():
             title, words = str(processedPost.post.id), processedPost.body
             words = words.split()
-            if len(words) < 75:
+            if len(words) < MIN_WORD_COUNT:
                 continue
             yield TaggedDocument(words=words, tags=[title])
 
@@ -26,7 +27,18 @@ class inlemmaCore():
     
     def loadD2Vmodel(self, D2VmodelPath):
         return Doc2Vec.load(D2VmodelPath)
-    
+
+    def includePost(self, processedPost):        
+        words = processedPost.body.split()
+        
+        if len(words) < MIN_WORD_COUNT:
+            return False, None
+
+        vector = self.D2Vmodel.infer_vector(words)
+        self.D2Vmodel.dv.add_vector(str(processedPost.post.id), vector)
+        self.D2Vmodel.dv.fill_norms()
+        return True, vector
+
     def updateD2Vmodel(self):
         try:
             self.D2Vmodel.save(f'{settings.BASE_DIR}/spaces/D2Vmodels/{datetime.now().strftime("%d_%m_%Y_%H_%M")}.model')
@@ -40,8 +52,8 @@ class inlemmaCore():
             dm=1, dm_mean=1,  # use mean of context word vectors to train DM
             vector_size=200, window=8, epochs=50, workers=workers, max_final_vocab=1000000,
         )
-        model_dm.build_vocab(documents, progress_per=100000)
-        model_dm.train(documents, total_examples=model_dm.corpus_count, epochs=model_dm.epochs, report_delay=15*60)
+        model_dm.build_vocab(documents, progress_per=10000)
+        model_dm.train(documents, total_examples=model_dm.corpus_count, epochs=model_dm.epochs, report_delay=5*60)
         self.D2Vmodel = model_dm
         self.D2Vmodel.save(f'{settings.BASE_DIR}/spaces/D2Vmodels/latest.model')
 
@@ -55,15 +67,9 @@ class inlemmaCore():
                 processedPost = ProcessedPost.objects.get(post=post)
             except:
                 return []
-            
-            words = processedPost.body.split()
-            vector = self.D2Vmodel.infer_vector(words)
-            
-            if len(words) < 75:
+            added, vector = self.includePost(processedPost)
+            if not added:
                 return self.D2Vmodel.dv.most_similar(vector, topn=n)
-            
-            self.D2Vmodel.dv.add_vector(str(post.id), vector)
-            self.D2Vmodel.dv.fill_norms()
         return self.D2Vmodel.dv.most_similar(positive=[str(post.id)], topn=n)
 
 

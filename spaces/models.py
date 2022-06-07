@@ -73,6 +73,4 @@ class PostProcessor(threading.Thread):
         self.processedPost.body = self.process(body)
         self.processedPost.save()
         from .utils import inlemmaEngine
-        vector = inlemmaEngine.D2Vmodel.infer_vector(self.processedPost.body.split())
-        inlemmaEngine.D2Vmodel.dv.add_vector(str(self.processedPost.post.id), vector)
-        inlemmaEngine.D2Vmodel.dv.fill_norms()
+        inlemmaEngine.includePost(self.processedPost)
