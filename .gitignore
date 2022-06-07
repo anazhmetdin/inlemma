@@ -19,3 +19,6 @@ img/
 ##################
 inlemma/settings.py
 spaces/D2Vmodels/*
+.env
+redis-data/
+data/

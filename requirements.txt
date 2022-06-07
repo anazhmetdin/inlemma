@@ -1,3 +1,4 @@
+wheel
 django
 psycopg2-binary
 fontawesomefree
@@ -6,6 +7,7 @@ six
 Pillow
 django-ckeditor
 django-bleach
+python-crontab
 celery
 redis
 django-celery-results

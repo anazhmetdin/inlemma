@@ -1,0 +1,63 @@
+version: "3.9"
+   
+services:
+
+  redis:
+    image: redis:alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./redis-data:/data
+    restart: always
+  
+  db:
+    image: postgres
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
+    env_file:
+      - ./.env
+  
+  web:
+    # build: .
+    image: inlemma_web
+    command: sh -c "python3.9 manage.py makemigrations &&
+                    python3.9 manage.py migrate &&
+                    python3.9 manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    env_file:
+      - ./.env
+    depends_on:
+      - db
+      - redis
+  
+  celery:
+    restart: always
+    # build: .
+    image: inlemma_web
+    command: celery -A inlemma worker -l info -P threads
+    volumes:
+      - .:/app
+    env_file:
+      - ./.env
+    depends_on:
+      - db
+      - redis
+      - web
+  
+  beat:
+    restart: always
+    # build: .
+    image: inlemma_web
+    command: celery -A inlemma beat -l info
+    volumes:
+      - .:/app
+    env_file:
+      - ./.env
+    depends_on:
+      - db
+      - redis
+      - web
+      - celery
