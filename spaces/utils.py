@@ -30,14 +30,14 @@ class inlemmaCore():
 
     def includePost(self, processedPost):        
         words = processedPost.body.split()
+        vector = self.D2Vmodel.infer_vector(words)
         
         if len(words) < MIN_WORD_COUNT:
-            return False, None
+            return False, vector
 
-        vector = self.D2Vmodel.infer_vector(words)
         self.D2Vmodel.dv.add_vector(str(processedPost.post.id), vector)
         self.D2Vmodel.dv.fill_norms()
-        return True, vector
+        return True, None
 
     def updateD2Vmodel(self):
         try:
